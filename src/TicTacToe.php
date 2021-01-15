@@ -18,12 +18,12 @@ class TicTacToe
         return $result !== false ? $result : null;
     }
 
-    private function theWinnerIsVerticallyAligned(array $line0, array $line1, array $line2): ?string
+    private function theWinnerIsHorizontallyAligned(array $line0, array $line1, array $line2): ?string
     {
         return $this->searchWinnerFrom($line0) ?? $this->searchWinnerFrom($line1) ?? $this->searchWinnerFrom($line2) ?? null;
     }
 
-    private function theWinnerIsHorizontallyAligned(array $column0, array $column1, array $column2)
+    private function theWinnerIsVerticallyAligned(array $column0, array $column1, array $column2)
     {
         return $this->searchWinnerFrom($column0) ?? $this->searchWinnerFrom($column1) ?? $this->searchWinnerFrom($column2) ?? null;
     }
