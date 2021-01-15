@@ -7,17 +7,26 @@ use PHPUnit\Framework\TestCase;
 class TicTacToeTest extends TestCase
 {
     /**
-     * @dataProvider getDataSet
-     * @group tic
+     * @dataProvider getDataSetFromAnArrayBoard
      */
-    public function testAndTheWinnerIs(array $board, string $expectedResult)
+    public function testAndTheWinnerIsWhenABoardIsAnArray(array $board, string $expectedResult)
     {
         $ticTac = new TicTacToe();
         $actualResult = $ticTac->andTheWinnerIs($board);
         $this->assertEquals($expectedResult, $actualResult);
     }
 
-    public function getDataSet(): array
+    /**
+     * @dataProvider getDataSetFormAStringBoard
+     */
+    public function testAndTheWinnerIsWhenABoardIsAString(string $board, string $expectedResult)
+    {
+        $ticTac = new TicTacToe();
+        $actualResult = $ticTac->andTheWinnerIs($board);
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    public function getDataSetFromAnArrayBoard(): array
     {
         return [
             [
@@ -58,6 +67,32 @@ class TicTacToeTest extends TestCase
                     ['X', 'X', 'O'],
                     ['O', 'X', 'O'],
                 ],
+                'Tie'
+            ],
+        ];
+    }
+
+    public function getDataSetFormAStringBoard(): array
+    {
+        return [
+            [
+                "O X O\nX X O\nO X X",
+                'X'
+            ],
+            [
+                 "X X X\nX 0 O\nO X X",
+                'X'
+            ],
+            [
+                "O O X\nX O X\nO X O",
+                'O'
+            ],
+            [
+                "O O X\nO X X\nX X O",
+                'X'
+            ],
+            [
+                "O O X\nX X O\nO X O",
                 'Tie'
             ],
         ];

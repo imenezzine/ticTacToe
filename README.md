@@ -7,7 +7,7 @@ Le joueur utilisant les pions :x: commence toujours.
 ## :nerd_face: Comment ça marche
 
 ### Technos utilisés : 
-- `PHP7` : langage de programmation
+- `PHP8` : langage de programmation
 - `Composer` : outil de gestion de dépendences
 - `Phpunit` : framework de test
 
