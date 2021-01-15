@@ -1,18 +1,18 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 class TicTacToe
 {
-    public function andTheWinnerIs(array|string $board) : string
+    public function andTheWinnerIs(array|string $board): string
     {
         if (!is_array($board)) {
             $board = $this->buildABoardWhenIsAString($board);
         }
 
-        return $this->theWinnerIsHorizontallyAligned($board[0], $board[1], $board[2]) ??
-            $this->theWinnerIsVerticallyAligned([$board[0][0],$board[1][0],$board[2][0]], [$board[0][1],$board[1][1],$board[2][1]], [$board[0][2],$board[1][2],$board[2][2]]) ??
-            $this->theWinnerIsDiagonallyAligned([$board[0][0],$board[1][1],$board[2][2]], [$board[0][2],$board[1][1],$board[2][0]]) ?? 'Tie';
+        return $this->theWinnerIsHorizontallyAligned($board) ??
+            $this->theWinnerIsVerticallyAligned($board) ??
+            $this->theWinnerIsDiagonallyAligned($this->sliceFirstDiagonalFromABoard($board), $this->sliceSecondDiagonalFromABoard($board)) ?? 'Tie';
     }
 
     private function buildABoardWhenIsAString(string $board)
@@ -27,25 +27,72 @@ class TicTacToe
         return explode($delimiter, $line);
     }
 
-    private function searchWinnerFrom(array $line): ?string
+    private function theWinnerIsHorizontallyAligned(array $board): ?string
     {
-        $result = array_search(3, array_count_values($line));
+        for ($line = 0; $line < count($board); $line++) {
+            if ($result = $this->searchWinnerFrom($board[$line])) {
+                return $result;
+            }
+        }
 
-        return $result !== false ? $result : null;
+        return null;
     }
 
-    private function theWinnerIsHorizontallyAligned(array $line0, array $line1, array $line2): ?string
+    private function theWinnerIsVerticallyAligned(array $board): ?string
     {
-        return $this->searchWinnerFrom($line0) ?? $this->searchWinnerFrom($line1) ?? $this->searchWinnerFrom($line2) ?? null;
-    }
+        for ($column = 0; $column < count($board); $column++) {
+            if ($result = $this->searchWinnerFrom($this->sliceAColumnFromABoard($board, $column))) {
+                return $result;
+            }
+        }
 
-    private function theWinnerIsVerticallyAligned(array $column0, array $column1, array $column2)
-    {
-        return $this->searchWinnerFrom($column0) ?? $this->searchWinnerFrom($column1) ?? $this->searchWinnerFrom($column2) ?? null;
+        return null;
     }
 
     private function theWinnerIsDiagonallyAligned(array $firstDiagonal, array $secondDiagonal)
     {
         return $this->searchWinnerFrom($firstDiagonal) ?? $this->searchWinnerFrom($secondDiagonal) ?? null;
+    }
+
+    private function searchWinnerFrom(array $line): ?string
+    {
+        $result = array_search(count($line), array_count_values($line));
+
+        return $result !== false ? $result : null;
+    }
+
+    private function sliceAColumnFromABoard(array $board, int $column): array
+    {
+        $columns = [];
+        for ($line = 0; $line < count($board); $line++) {
+            array_push($columns, $board[$line][$column]);
+        }
+
+        return $columns;
+    }
+
+    private function sliceFirstDiagonalFromABoard(array $board): array
+    {
+        $diagonal = [];
+        for ($diag = 0; $diag < count($board); $diag++) {
+            array_push($diagonal, $board[$diag][$diag]);
+        }
+
+        return $diagonal;
+    }
+
+    private function sliceSecondDiagonalFromABoard(array $board): array
+    {
+        $line = 0;
+        $column = count($board) - 1;
+        $diagonal = [];
+
+        while ($line < count($board) && $column >= 0) {
+            array_push($diagonal, $board[$line][$column]);
+            $line++;
+            $column--;
+        }
+
+        return $diagonal;
     }
 }

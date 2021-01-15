@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
@@ -69,6 +69,35 @@ class TicTacToeTest extends TestCase
                 ],
                 'Tie'
             ],
+            [
+                [
+                    ['X', 'X', 'X', 'X'],
+                    ['X', '0', 'O', '0'],
+                    ['O', 'X', 'X', 'X'],
+                    ['O', 'X', 'X', 'X'],
+                ],
+                'X'
+            ],
+            [
+                [
+                    ['O', 'X', 'X', 'X', 'O'],
+                    ['X', 'O', 'O', 'O', 'O'],
+                    ['O', 'X', 'O', 'X', 'X'],
+                    ['O', 'X', 'X', 'O', 'O'],
+                    ['O', 'X', 'X', 'X', 'O'],
+                ],
+                'O'
+            ],
+            [
+                [
+                    ['O', 'X', 'X', 'X', 'O'],
+                    ['X', 'X', 'O', 'O', 'O'],
+                    ['O', 'O', 'O', 'X', 'X'],
+                    ['O', 'X', 'X', 'O', 'O'],
+                    ['O', 'X', 'X', 'X', 'O'],
+                ],
+                'Tie'
+            ],
         ];
     }
 
@@ -80,7 +109,7 @@ class TicTacToeTest extends TestCase
                 'X'
             ],
             [
-                 "X X X\nX 0 O\nO X X",
+                "X X X\nX 0 O\nO X X",
                 'X'
             ],
             [
